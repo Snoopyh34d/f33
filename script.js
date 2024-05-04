@@ -62,12 +62,12 @@ function createRow(obj) {
 
 // Search box event
 searchBox.addEventListener("input", (e) => {
-    const enteredText = searchBox.value;
+    const enteredText = searchBox.value.toLowerCase();
     const arr = JSON.parse(localStorage.getItem("coinData"));
     let val = arr.filter((ele, i) => {
         return (
-            ele.name.toLowerCase().includes(enteredText.toLowerCase()) ||
-            ele.symbol.toLowerCase().includes(enteredText.toLowerCase())
+            ele.name.toLowerCase().includes(enteredText) ||
+            ele.symbol.toLowerCase().includes(enteredText)
         );
     });
     loopObject(val);
@@ -76,7 +76,7 @@ searchBox.addEventListener("input", (e) => {
 // Sorting event for mktCap button
 sortMktCap.addEventListener("click", (e) => {
     const arr = JSON.parse(localStorage.getItem("coinData"));
-    const sorted = arr.sort((a, b) => a.market_cap - b.market_cap);
+    const sorted = arr.sort((a, b) => parseFloat(a.market_cap) - parseFloat(b.market_cap));
     loopObject(sorted);
 });
 
@@ -84,7 +84,7 @@ sortMktCap.addEventListener("click", (e) => {
 sortPercentage.addEventListener("click", (e) => {
     const arr = JSON.parse(localStorage.getItem("coinData"));
     const sorted = arr.sort(
-        (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
+        (a, b) => parseFloat(a.price_change_percentage_24h) - parseFloat(b.price_change_percentage_24h)
     );
     loopObject(sorted);
 });
